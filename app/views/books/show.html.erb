@@ -28,28 +28,24 @@
             <div>
         </tr>
       </table>
-<div>
-  <% @book.book_comments.each do |book_comment| %>
-  <tr>
-    <td>
-        <div><%= link_to(book_comment.user) do %>
-            <%= image_tag book_comment.user.get_profile_image, size:"50x50" %><br>
-            <%= book_comment.user.name %> 
-            <% end %>
-            <%= book_comment.comment %>
-            <% if book_comment.user == current_user %>
-            <%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
-            <% end %>
-            <% end %>
-            </div>
-           
-            </td>
-            </tr>
-  <%= form_with model: [@book,@book_comment] do |f| %>
-    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
-    <%= f.submit "送信する" %>
-  <% end %>
-</div>
+      <div>
+        <% @book.book_comments.each do |book_comment| %>
+        <div>
+          <%= link_to(book_comment.user) do %>
+          <%= image_tag book_comment.user.get_profile_image, size:"50x50" %><br>
+          <%= book_comment.user.name %> 
+          <% end %>
+          <%= book_comment.comment %>
+          <% if book_comment.user == current_user %>
+          <%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
+          <% end %>
+          <% end %>
+        </div>
+        <%= form_with model: [@book,@book_comment] do |f| %>
+        <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+        <%= f.submit "送信する" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
