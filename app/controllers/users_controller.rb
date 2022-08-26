@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:update, :edit]
-
+  before_action :authenticate_user!
+  before_action :set_user, only: %I[show edit update destroy followings followers]
+  
+  
   def show
     @user = User.find(params[:id])
     @books = @user.books
@@ -23,9 +26,21 @@ class UsersController < ApplicationController
       render :edit 
     end
   end
+  
+  def followings
+    @followings = @user.following_users
+  end
+
+  def followers
+    @followers = @user.follower_users
+  end
 
   private
-
+  
+  def set_user
+    @user = User.find(params[:id])
+  end
+  
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
   end
